@@ -1,0 +1,25 @@
+import yfinance as yf
+from datetime import datetime
+
+# Define tickers
+tickers = ['MSFT', 'AAPL', 'MSTR']
+qtys = [100, 400, 97]
+
+# Get today's date and first trading day of the year
+today = datetime.today().strftime('%Y-%m-%d')
+start_of_year = f'{datetime.today().year}-01-01'
+
+print("{'Ticker':<6} {'Close':>10} {'YTD % Change':>15}")
+print("-" * 35)
+
+for ticker in tickers:
+    data = yf.download(ticker, start=start_of_year, end=today)
+    if not data.empty:
+        close = data['Close']
+        ytd_open = data['Close'].iloc[0]
+        latest_close = data['Close'].iloc[-1]
+        ytd_pct_change = ((latest_close - ytd_open) / ytd_open) * 100
+        print(f"{ticker:<6} {latest_close:>10.2f} {ytd_pct_change:>14.2f}%")
+    else:
+        print(f"{ticker:<6} {'N/A':>10} {'N/A':>15}")
+
