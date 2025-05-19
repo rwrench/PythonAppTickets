@@ -16,7 +16,9 @@ for ticker in tickers:
    try:
        data = yf.download(ticker, 
              start=start_of_year, 
-             end=today,progress=False)
+             end=today,
+             progress=False,
+             auto_adjust=False)
        if not data.empty:
             close = data['Close']
             ytd_open = data['Close'].iloc[0]
