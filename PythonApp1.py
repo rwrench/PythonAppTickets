@@ -44,8 +44,46 @@ def format_result(ticker,
             + f"{ytd_pct_change:>{ytd_w}.2f}%"
         )
 
-tickers = ['MSFT', 'AAPL', 'MSTR']
-qtys = [100, 400, 97]
+# Set your defaults here
+DEFAULT_TICKERS = "MSFT,AAPL,MSTR"
+DEFAULT_QTYS = "100,400,97"
+
+tickers_input = input(f"Enter tickers separated by commas (e.g., {DEFAULT_TICKERS}) [default: {DEFAULT_TICKERS}]: ")
+qtys_input = input(f"Enter quantities separated by commas (e.g., {DEFAULT_QTYS}) [default: {DEFAULT_QTYS}]: ")
+
+if not tickers_input.strip():
+    tickers_input = DEFAULT_TICKERS
+if not qtys_input.strip():
+    qtys_input = DEFAULT_QTYS
+
+tickers = [t.strip().upper() for t in tickers_input.split(",") if t.strip()]
+qtys_raw = [q.strip() for q in qtys_input.split(",") if q.strip()]
+
+# Validate tickers and quantities
+valid_tickers = []
+valid_qtys = []
+for ticker, qty_str in zip(tickers, qtys_raw):
+    try:
+        qty = int(qty_str)
+    except ValueError:
+        print(f"Quantity '{qty_str}' for ticker '{ticker}' is not a valid integer and will be skipped.")
+        continue
+    try:
+        info = yf.Ticker(ticker).info
+        if info and 'shortName' in info:
+            valid_tickers.append(ticker)
+            valid_qtys.append(qty)
+        else:
+            print(f"Ticker '{ticker}' is invalid and will be skipped.")
+    except Exception:
+        print(f"Ticker '{ticker}' is invalid and will be skipped.")
+
+tickers = valid_tickers
+qtys = valid_qtys
+
+if not tickers:
+    print("No valid tickers entered. Exiting.")
+    exit()
 
 today = datetime.today().strftime('%Y-%m-%d')
 start_of_year = f'{datetime.today().year}-01-01'
