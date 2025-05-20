@@ -27,13 +27,22 @@ def calculate_ytd_change(close):
     ytd_pct_change = ((latest_close - ytd_open) / ytd_open) * 100
     return latest_close, ytd_pct_change
 
-def format_result(ticker, latest_close, ytd_pct_change, ticker_w=8, close_w=12, ytd_w=16):
+def format_result(ticker,
+                 latest_close,
+                ytd_pct_change,
+               ticker_w=8, 
+               close_w=12, 
+               ytd_w=16):
     if latest_close is None:
         return f"{ticker:<{ticker_w}}{'N/A':>{close_w}}{'N/A':>{ytd_w}}"
     elif latest_close == 'ERROR':
         return f"{ticker:<{ticker_w}}{'ERROR':>{close_w}}{'N/A':>{ytd_w}}"
     else:
-        return f"{ticker:<{ticker_w}}{latest_close:>{close_w}.2f}{ytd_pct_change:>{ytd_w}.2f}%"
+        return (
+            f"{ticker:<{ticker_w}}"
+            + f"{latest_close:>{close_w}.2f}"
+            + f"{ytd_pct_change:>{ytd_w}.2f}%"
+        )
 
 tickers = ['MSFT', 'AAPL', 'MSTR']
 qtys = [100, 400, 97]
@@ -47,7 +56,9 @@ close_w = 12
 ytd_w = 16
 
 # Print header with matching widths
-print(f"{'Ticker':<{ticker_w}}{'Close':>{close_w}}{'YTD % Change':>{ytd_w}}")
+print(f"{'Ticker':<{ticker_w}}" +
+      f"{'Close':>{close_w}}" +
+      f"{'YTD % Change':>{ytd_w}}")
 print("-" * (ticker_w + close_w + ytd_w))
 
 results = []
@@ -66,12 +77,21 @@ for ticker in tickers:
 # Sort by YTD % Change descending, handling None values
 results_sorted = sorted(
     results,
-    key=lambda x: (x[2] is not None, x[2] if x[2] is not None else float('-inf')),
+    key=lambda x: (x[2] is not None,
+                  x[2] if x[2] is not None else float('-inf')),
     reverse=True
 )
 
 for ticker, latest_close, ytd_pct_change in results_sorted:
-    print(format_result(ticker, latest_close, ytd_pct_change, ticker_w, close_w, ytd_w))
+    print(format_result(ticker,
+                       latest_close,
+                       ytd_pct_change, 
+                       ticker_w,
+                       close_w,
+                       ytd_w))
+
+
+
 
 
 
