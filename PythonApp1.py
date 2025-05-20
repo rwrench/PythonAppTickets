@@ -2,16 +2,20 @@ import yfinance as yf
 import pandas as pd 
 from datetime import datetime
 
-# Define tickers
 tickers = ['MSFT', 'AAPL', 'MSTR']
 qtys = [100, 400, 97]
 
-# Get today's date and first trading day of the year
 today = datetime.today().strftime('%Y-%m-%d')
 start_of_year = f'{datetime.today().year}-01-01'
 
-print('Ticker  Close     YTD % Change')
-print("-" * 35)
+# Define column widths
+ticker_w = 8
+close_w = 12
+ytd_w = 16
+
+# Print header with matching widths
+print(f"{'Ticker':<{ticker_w}}{'Close':>{close_w}}{'YTD % Change':>{ytd_w}}")
+print("-" * (ticker_w + close_w + ytd_w))
 
 results = []
 
@@ -26,7 +30,6 @@ for ticker in tickers:
         )
         if not data.empty and 'Close' in data:
             close = data['Close']
-            # If close is a DataFrame, select the column for the ticker
             if isinstance(close, pd.DataFrame):
                 if ticker in close.columns:
                     close = close[ticker]
@@ -54,11 +57,11 @@ results_sorted = sorted(
 
 for ticker, latest_close, ytd_pct_change in results_sorted:
     if latest_close is None:
-        print(f"{ticker:<6} {'N/A':>10} {'N/A':>15}")
+        print(f"{ticker:<{ticker_w}}{'N/A':>{close_w}}{'N/A':>{ytd_w}}")
     elif latest_close == 'ERROR':
-        print(f"{ticker:<6} {'ERROR':>10} {'N/A':>15}")
+        print(f"{ticker:<{ticker_w}}{'ERROR':>{close_w}}{'N/A':>{ytd_w}}")
     else:
-        print(f"{ticker:<6} {latest_close:>10.2f} {ytd_pct_change:>14.2f}%")
+        print(f"{ticker:<{ticker_w}}{latest_close:>{close_w}.2f}{ytd_pct_change:>{ytd_w}.2f}%")
 
 
 
