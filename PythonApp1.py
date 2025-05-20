@@ -111,6 +111,7 @@ for ticker in tickers:
         else:
             results.append((ticker, None, None))
     except Exception:
+        
         results.append((ticker, 'ERROR', None))
 
 # Sort by YTD % Change descending, handling None values
