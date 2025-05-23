@@ -27,7 +27,6 @@
     <Compile Include="app.py" />
     <Compile Include="PythonApp1.py" />
     <Compile Include="tests\test_app.py" />
-    <Compile Include="tests\test_smoke.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="tests\" />

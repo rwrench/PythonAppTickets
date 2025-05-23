@@ -3,10 +3,11 @@ import os
 import unittest
 import pandas as pd
 
+
 # Add parent directory to sys.path so PythonApp1 can be imported
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from PythonApp1 import calculate_ytd_change, format_result
+from PythonApp1.app import calculate_ytd_change, format_result
 
 class TestPythonApp1(unittest.TestCase):
     def test_calculate_ytd_change(self):
