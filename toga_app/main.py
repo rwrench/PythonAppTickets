@@ -4,6 +4,7 @@ from toga.style.pack import COLUMN, ROW
 from datetime import datetime
 import sys
 import os
+import requests
 
 # Ensure finance_utils can be imported when running from this subfolder
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -34,15 +35,13 @@ class YTDApp(toga.App):
 
     def run_analysis(self, widget):
         tickers = [t.strip().upper() for t in self.ticker_input.value.split(',') if t.strip()]
-        today = datetime.today().strftime('%Y-%m-%d')
-        start_of_year = f'{datetime.today().year}-01-01'
         results = []
         for ticker in tickers:
             try:
-                close = fetch_close_prices(ticker, start_of_year, today)
-                if close is not None:
-                    latest_close, ytd_pct_change = calculate_ytd_change(close)
-                    results.append(f"{ticker}: Close={latest_close:.2f}, YTD % Change={ytd_pct_change:.2f}%")
+                resp = requests.get("http://127.0.0.1:5000/ytd", params={"ticker": ticker})
+                if resp.status_code == 200:
+                    data = resp.json()
+                    results.append(f"{ticker}: Close={data['close']:.2f}, YTD % Change={data['ytd_pct_change']:.2f}%")
                 else:
                     results.append(f"{ticker}: N/A")
             except Exception:
