@@ -38,7 +38,7 @@ class YTDApp(toga.App):
         results = []
         for ticker in tickers:
             try:
-                resp = requests.get("http://127.0.0.1:5000/ytd", params={"ticker": ticker})
+                resp = requests.get("https://pythonapptickets.onrender.com/ytd", params={"ticker": ticker})
                 if resp.status_code == 200:
                     data = resp.json()
                     results.append(f"{ticker}: Close={data['close']:.2f}, YTD % Change={data['ytd_pct_change']:.2f}%")
