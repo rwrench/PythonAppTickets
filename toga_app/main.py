@@ -8,7 +8,7 @@ import requests
 
 # Ensure finance_utils can be imported when running from this subfolder
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from finance_utils import fetch_close_prices, calculate_ytd_change
+from api_app.finance_utils import fetch_close_prices, calculate_ytd_change
 
 class YTDApp(toga.App):
     def startup(self):
