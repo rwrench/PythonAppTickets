@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from finance_utils import fetch_close_prices, calculate_ytd_change
+from api_app.finance_utils import fetch_close_prices, calculate_ytd_change
 from datetime import datetime
 
 app = Flask(__name__)
