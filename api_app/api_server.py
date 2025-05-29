@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from finance_utils import fetch_close_prices, calculate_ytd_change
 from datetime import datetime
+import re
 
 app = Flask(__name__)
 
@@ -9,6 +10,9 @@ def ytd():
     ticker = request.args.get("ticker")
     if not ticker:
         return jsonify({"error": "Missing ticker"}), 400
+    # Restrict ticker format
+    if not re.match(r"^[A-Z0-9]{1,5}$", ticker):
+        return jsonify({"error": "Invalid ticker format"}), 400
     today = datetime.today().strftime('%Y-%m-%d')
     start_of_year = f'{datetime.today().year}-01-01'
     close = fetch_close_prices(ticker, start_of_year, today)
