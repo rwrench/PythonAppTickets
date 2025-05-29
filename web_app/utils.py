@@ -20,6 +20,10 @@ def fetch_ytd_data(ticker, total_timeout=10, single_attempt_timeout=10):
             if resp.status_code == 200:
                 data = resp.json()
                 return (ticker, data['close'], data['ytd_pct_change'])
+            elif resp.status_code == 404:
+                # Invalid ticker, don't retry
+                logging.warning(f"Ticker {ticker} not found (404). Not retrying.")
+                return (ticker, "ERROR", None)
         except Exception as e:
             logging.error(f"Error fetching data for {ticker}: {e}")
         time.sleep(1)
