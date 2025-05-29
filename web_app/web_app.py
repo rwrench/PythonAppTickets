@@ -10,11 +10,18 @@ HTML = """
 <!doctype html>
 <title>YTD Analyzer</title>
 <h1>YTD Analyzer</h1>
-<form method="post">
+<form method="post" id="ytd-form" onsubmit="showSpinner()">
   Tickers (comma separated): <input name="tickers" value="{{ tickers }}"><br>
-  <input type="submit" value="Analyze">
+  <input type="submit" value="Analyze" id="analyze-btn">
 </form>
+<div id="spinner" style="display:none;font-size:2em;">⏳ Processing...</div>
 <pre>{{ results }}</pre>
+<script>
+function showSpinner() {
+    document.getElementById('analyze-btn').disabled = true;
+    document.getElementById('spinner').style.display = 'block';
+}
+</script>
 """
 
 # Set up logging (at the top of your file, after imports)
