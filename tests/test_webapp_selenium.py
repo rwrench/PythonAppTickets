@@ -69,26 +69,26 @@ def test_valid_tickers_display_ytd():
     finally:
         driver.quit()
 
-# def test_invalid_ticker_reported():
-    driver = get_driver()
-    # Wait for the ticker input to be present
-    ticker_input = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.NAME, "tickers"))
-    )
-    analyze_btn = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "analyze-btn"))
-    )
-    ticker_input.clear()
-    ticker_input.send_keys("INVALID")
-    analyze_btn.click()
-    # Wait for results to appear
-    results = WebDriverWait(driver, 15).until(
-        EC.visibility_of_element_located((By.TAG_NAME, "pre"))
-    ).text
-    print("RESULTS:", results)
-    assert "INVALID" in results or "ignored" in results
-    print("Invalid ticker reporting test passed.")
-    driver.quit()
+# # def test_invalid_ticker_reported():
+#     driver = get_driver()
+#     # Wait for the ticker input to be present
+#     ticker_input = WebDriverWait(driver, 10).until(
+#         EC.presence_of_element_located((By.NAME, "tickers"))
+#     )
+#     analyze_btn = WebDriverWait(driver, 10).until(
+#         EC.presence_of_element_located((By.ID, "analyze-btn"))
+#     )
+#     ticker_input.clear()
+#     ticker_input.send_keys("INVALID")
+#     analyze_btn.click()
+#     # Wait for results to appear
+#     results = WebDriverWait(driver, 15).until(
+#         EC.visibility_of_element_located((By.TAG_NAME, "pre"))
+#     ).text
+#     print("RESULTS:", results)
+#     assert "INVALID" in results or "ignored" in results
+#     print("Invalid ticker reporting test passed.")
+#     driver.quit()
 
 if __name__ == "__main__":
     print("Running Selenium tests...")  
