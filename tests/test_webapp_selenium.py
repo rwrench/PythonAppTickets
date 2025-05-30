@@ -19,10 +19,10 @@ def get_driver():
     driver.get("https://pythonappticketsweb.onrender.com/")
     return driver
 
-def wait_for_ticker_input(driver, timeout=20):
-    """Wait for the ticker input element to be present and return it."""
+def wait_for_element(driver, locator, ec, timeout=20):
+    """Wait for an element matching the locator and expected condition."""
     return WebDriverWait(driver, timeout).until(
-        EC.presence_of_element_located((By.NAME, "tickers"))
+        ec(locator)
     )
 
 def click_button(driver, ticker_input, ticker_txt):
@@ -33,9 +33,9 @@ def click_button(driver, ticker_input, ticker_txt):
     
 
 def get_visible_results(driver):
-    results = WebDriverWait(driver, 30).until(
-            EC.visibility_of_element_located((By.TAG_NAME, "pre"))
-        ).text
+    results = wait_for_element(driver,
+        (By.TAG_NAME, "pre"), 
+        EC.visibility_of_element_located, timeout=30).text
     print("RESULTS:", results)
     return results
 
@@ -63,7 +63,9 @@ def test_valid_tickers_display_ytd():
     print("Starting test for valid tickers display...")
     driver = get_driver()
     try:
-        ticker_input = wait_for_ticker_input(driver, timeout=60)  # Wait up to 60 seconds
+        ticker_input = wait_for_element(driver,
+            (By.NAME, "tickers"), 
+            EC.presence_of_element_located, timeout=60)
         click_button(driver, ticker_input, "MSFT,AAPL")
         print("Button clicked, waiting for results...")
         results = get_visible_results(driver)
@@ -83,7 +85,10 @@ def test_invalid_ticker_reported():
     print("Starting test for invalid ticker reporting...")
     driver = get_driver()
     try:
-        ticker_input = wait_for_ticker_input(driver, timeout=60)  
+        ticker_input = wait_for_element(driver,
+            (By.NAME, "tickers"), 
+            EC.presence_of_element_located, timeout=60)
+        
         click_button(driver, ticker_input, "INVALID")
         results = get_visible_results(driver)
         assert "No valid tickers found. Please enter valid stock symbols." in results or "INVALID" in results
