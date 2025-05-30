@@ -39,36 +39,21 @@ def get_visible_results(driver):
     print("RESULTS:", results)
     return results
 
-# # def test_spinner_and_button_disabled():
-#     driver = get_driver()
-#     ticker_input = driver.find_element(By.NAME, "tickers")
-#     analyze_btn = driver.find_element(By.ID, "analyze-btn")
-#     ticker_input.clear()
-#     ticker_input.send_keys("MSFT,AAPL,INVALID")
-#     analyze_btn.click()
-#     # Wait for spinner to appear
-#     spinner = WebDriverWait(driver, 10).until(
-#         EC.visibility_of_element_located((By.ID, "spinner"))
-#     )
-#     assert spinner.is_displayed(), "Spinner should be visible after submit"
-#     # Wait for button to be disabled
-#     WebDriverWait(driver, 10).until(
-#         lambda d: analyze_btn.get_attribute("disabled") == "true"
-#     )
-#     assert analyze_btn.get_attribute("disabled") == "true", "Button should be disabled after submit"
-#     print("Spinner and button state test passed.")
-#     driver.quit()
+def input_tickers_and_fetch_results(driver):
+    ticker_input = wait_for_element(driver,
+            (By.NAME, "tickers"), 
+            EC.presence_of_element_located, timeout=60)
+    click_button(driver, ticker_input, "MSFT,AAPL")
+    print("Button clicked, waiting for results...")
+    results = get_visible_results(driver)
+    return results
+
 
 def test_valid_tickers_display_ytd():
     print("Starting test for valid tickers display...")
     driver = get_driver()
     try:
-        ticker_input = wait_for_element(driver,
-            (By.NAME, "tickers"), 
-            EC.presence_of_element_located, timeout=60)
-        click_button(driver, ticker_input, "MSFT,AAPL")
-        print("Button clicked, waiting for results...")
-        results = get_visible_results(driver)
+        results = input_tickers_and_fetch_results(driver)
         assert "MSFT" in results
         assert "AAPL" in results
         print("Valid tickers display test passed.")
@@ -78,8 +63,6 @@ def test_valid_tickers_display_ytd():
         raise
     finally:
         driver.quit()
-
-
 
 def test_invalid_ticker_reported():
     print("Starting test for invalid ticker reporting...")
@@ -100,8 +83,31 @@ def test_invalid_ticker_reported():
     finally:
         driver.quit()
    
+
+def test_spinner_and_button_disabled():
+    print("Starting test for spinner and button state after submit...")
+    driver = get_driver()
+    try:
+        results = input_tickers_and_fetch_results(driver)
+        spinner = wait_for_element(driver,
+            (By.ID, "spinner")
+            , EC.visibility_of_element_located, timeout=30)
+        assert spinner.is_displayed(), "Spinner should be visible after submit"
+        analyze_btn = driver.find_element(By.ID, "analyze-btn")
+        WebDriverWait(driver, 10).until(
+            lambda d: analyze_btn.get_attribute("disabled") == "true"
+        )
+        assert analyze_btn.get_attribute("disabled") == "true", "Button should be disabled after submit"
+        print("Spinner and button state test passed.")
+    except Exception as e:
+        print("Test failed:", e)
+        print(driver.page_source) 
+        raise
+    finally:
+        driver.quit()
+
 if __name__ == "__main__":
     print("Running Selenium tests...")  
     test_valid_tickers_display_ytd()
     test_invalid_ticker_reported()
-    # test_spinner_and_button_disabled()
+    test_spinner_and_button_disabled()
