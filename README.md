@@ -28,10 +28,7 @@ first python project to read stock ticker information
   ```
   Enter one or more comma-separated tickers (e.g., `MSFT,AAPL,MSTR,INVALID`) and click "Analyze".
 
-- **Behavior:**  
-  - Valid tickers will display their YTD data.
-  - Invalid tickers will be reported as ignored.
-  - The "Analyze" button is disabled and a spinner is shown while processing.
+
 
 ---
 
