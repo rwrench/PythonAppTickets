@@ -1,16 +1,21 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from webdriver_manager.chrome import ChromeDriverManager
 import os
 
 
 def get_driver():
-    driver_path = os.path.join(os.path.dirname(__file__), "chromedriver.exe")
-    service = Service(driver_path)
-    driver = webdriver.Chrome(service=service)
+    options = Options()
+    options.add_argument("--headless")  # For CI or headless testing
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    # Automatically downloads and uses the correct ChromeDriver
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
     driver.get("https://pythonappticketsweb.onrender.com/")
     return driver
 
