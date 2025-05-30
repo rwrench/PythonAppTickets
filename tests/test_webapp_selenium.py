@@ -64,6 +64,7 @@ def test_valid_tickers_display_ytd():
         print("Valid tickers display test passed.")
     except Exception as e:
         print("Test failed:", e)
+        print(driver.page_source)  # Add this line
         raise
     finally:
         driver.quit()
