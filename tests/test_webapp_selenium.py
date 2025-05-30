@@ -86,7 +86,7 @@ def test_invalid_ticker_reported():
         ticker_input = wait_for_ticker_input(driver, timeout=60)  
         click_button(driver, ticker_input, "INVALID")
         results = get_visible_results(driver)
-        assert "INVALID" in results or "ignored" in results
+        assert "No valid tickers found. Please enter valid stock symbols." in results or "INVALID" in results
         print("Invalid ticker reporting test passed.")
     except Exception as e:
         print("Test failed:", e)
