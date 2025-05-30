@@ -1,5 +1,6 @@
 import yfinance as yf
 import pandas as pd
+import asyncio
 
 def fetch_close_prices(ticker, start, end):
     data = yf.download(
@@ -25,3 +26,6 @@ def calculate_ytd_change(close):
     latest_close = float(close.iloc[-1])
     ytd_pct_change = ((latest_close - ytd_open) / ytd_open) * 100
     return latest_close, ytd_pct_change
+
+async def fetch_close_prices_async(ticker, start, end):
+    return await asyncio.to_thread(fetch_close_prices, ticker, start, end)
