@@ -1,3 +1,4 @@
-flask[async]
+fastapi
+uvicorn
 yfinance
 pandas
