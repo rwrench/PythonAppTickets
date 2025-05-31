@@ -3,10 +3,20 @@ first python project to read stock ticker information
 ## Testing Notes
 
 ### API (`api_app/api_server.py`)
-- **Run locally:**  
+- **Install dependencies:**  
+  From the `api_app` directory:
+  ```
+  pip install -r requirements.txt
+  ```
+- **Run locally (FastAPI):**  
   From the `api_app` directory, start the API server:
   ```
-  python api_server.py
+  uvicorn api_server:app --host 0.0.0.0 --port 10000
+  ```
+- **Interactive docs:**  
+  Open your browser to:
+  ```
+  http://localhost:10000/docs
   ```
 - **Test endpoint:**  
   Open your browser or use curl/Postman to test:
@@ -16,6 +26,11 @@ first python project to read stock ticker information
   Replace `MSFT` with any ticker symbol.
 
 ### Web App (`web_app/web_app.py`)
+- **Install dependencies:**  
+  From the `web_app` directory:
+  ```
+  pip install -r requirements.txt
+  ```
 - **Run locally:**  
   From the project root, run:
   ```
@@ -28,7 +43,18 @@ first python project to read stock ticker information
   ```
   Enter one or more comma-separated tickers (e.g., `MSFT,AAPL,MSTR,INVALID`) and click "Analyze".
 
+---
 
+## Running Tests Locally
+
+- **API tests:**  
+  ```
+  pytest tests/test_api_ytd.py
+  ```
+- **Selenium/web tests:**  
+  ```
+  pytest tests/test_webapp_selenium.py
+  ```
 
 ---
 
@@ -48,9 +74,9 @@ first python project to read stock ticker information
   ```
 
 - **Start Command:**  
-  For the API:
+  For the API (FastAPI):
   ```
-  python api_server.py
+  uvicorn api_server:app --host 0.0.0.0 --port 10000
   ```
   For the Web App:
   ```
@@ -67,4 +93,4 @@ first python project to read stock ticker information
 
 **Note:**  
 - Ensure you have all dependencies installed from `requirements.txt` in each app's directory.
-- For async support, Flask 2.x+ and `flask[async]` are required.
+- FastAPI is now used for the API server. Interactive docs are available at `/docs` when running locally or on Render.
