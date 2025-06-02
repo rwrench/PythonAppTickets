@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
-@app.get("/ytd")
+@app.get("/api/stocks/ytd")
 async def ytd(ticker: str = Query(..., description="Stock ticker symbol")):
     logging.info(f"Received /ytd request for ticker: {ticker}")
     if not ticker:

@@ -21,7 +21,7 @@ first python project to read stock ticker information
 - **Test endpoint:**  
   Open your browser or use curl/Postman to test:
   ```
-  http://localhost:10000/ytd?ticker=MSFT
+  http://localhost:10000/api/stocks/ytd?ticker=MSFT
   ```
   Replace `MSFT` with any ticker symbol.
 
