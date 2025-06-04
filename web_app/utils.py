@@ -11,6 +11,7 @@ def fetch_ytd_data(ticker, total_timeout=10, single_attempt_timeout=10):
     while time.time() - start_time < total_timeout:
         try:
             logging.info(f"Requesting YTD data for {ticker}")
+            logging.info(f"API URL: {API_URL}")
             resp = requests.get(
                 API_URL,
                 params={"ticker": ticker},
