@@ -11,7 +11,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-RENDER_API_URL = "https://pythonapptickets.onrender.com/ytd"
+RENDER_API_URL = "https://pythonapptickets.onrender.com/api/stocks/ytd"
 
 # Set up a session with retries
 session = requests.Session()
@@ -42,4 +42,4 @@ def test_ytd_api_invalid_ticker():
     response = session.get(f"{RENDER_API_URL}?ticker=INVALID", timeout=(10, 90))
     assert response.status_code == 400 # Or whatever your API returns
     data = response.json()
-    assert "error" in data or "INVALID" in str(data)
+    assert data.get("detail") == "Invalid ticker format" or data.get("detail") == "Missing ticker"
