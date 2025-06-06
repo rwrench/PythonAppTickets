@@ -7,20 +7,33 @@ app = Flask(__name__)
 
 HTML = """
 <!doctype html>
-<title>YTD Analyzer</title>
-<h1>YTD Analyzer</h1>
-<form method="post" id="ytd-form" onsubmit="showSpinner()">
-  Tickers (comma separated): <input name="tickers" value="{{ tickers }}"><br>
-  <input type="submit" value="Analyze" id="analyze-btn">
-</form>
-<div id="spinner" style="display:none;font-size:2em;">⏳ Processing...</div>
-<pre>{{ results }}</pre>
-<script>
-function showSpinner() {
-    document.getElementById('analyze-btn').disabled = true;
-    document.getElementById('spinner').style.display = 'block';
-}
-</script>
+<html lang="en">
+  <head>
+    <title>YTD Analyzer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <h1 class="mb-4">YTD Analyzer</h1>
+      <form method="post" id="ytd-form" onsubmit="showSpinner()" class="mb-4">
+        <div class="mb-3">
+          <label for="tickers" class="form-label">Tickers (comma separated):</label>
+          <input name="tickers" id="tickers" class="form-control" value="{{ tickers }}">
+        </div>
+        <button type="submit" class="btn btn-primary" id="analyze-btn">Analyze</button>
+      </form>
+      <div id="spinner" style="display:none;font-size:2em;">⏳ Processing...</div>
+      <pre class="mt-4 bg-white p-3 rounded border">{{ results }}</pre>
+    </div>
+    <script>
+    function showSpinner() {
+        document.getElementById('analyze-btn').disabled = true;
+        document.getElementById('spinner').style.display = 'block';
+    }
+    </script>
+  </body>
+</html>
 """
 
 logging.basicConfig(level=logging.INFO)
