@@ -37,7 +37,7 @@ async def ytd(ticker: str = Query(..., description="Stock ticker symbol")):
             real_time_price = await asyncio.to_thread(get_real_time_price, ticker)
             
             # Use real-time price if it's more recent than our close data
-            if real_time_price and real_time_price != latest_close:
+            if real_time_price and abs(real_time_price - latest_close) > 0.01:
                 logging.info(f"Using real-time price {real_time_price} vs historical {latest_close}")
                 # Recalculate YTD change with real-time price
                 ytd_open = float(close.iloc[0])
