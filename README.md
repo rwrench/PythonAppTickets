@@ -96,39 +96,21 @@ first python project to read stock ticker information
 
 ---
 
-## Render Deployment
+## Network Access
 
-### Deploying to [Render](https://render.com):
+To access your app from other devices on your network:
 
-- **requirements.txt:**  
-  Ensure each service (`api_app` and `web_app`) has its own `requirements.txt` in its root directory.
+1. **Find your device's IP address:**
+   - **Windows**: `ipconfig` 
+   - **Mac**: `ifconfig | grep "inet " | grep -v 127.0.0.1`
 
-- **Root Directory:**  
-  In Render, set the "Root Directory" for each service to the appropriate subfolder (`api_app/` or `web_app/`).
-
-- **Build Command:**  
-  ```
-  pip install -r requirements.txt
-  ```
-
-- **Start Command:**  
-  For the API (FastAPI):
-  ```
-  uvicorn api_server:app --host 0.0.0.0 --port 10000
-  ```
-  For the Web App:
-  ```
-  python -m web_app.web_app
-  ```
-
-- **Environment Variables:**  
-  Set any required environment variables (such as `YTD_API_URL`) in the Render dashboard for each service.
-
-- **Access:**  
-  After deployment, use the URLs provided by Render to access your API and web app.
+2. **Access from other devices:**
+   - Replace `localhost` with your IP address
+   - Example: `http://192.168.1.100:5001`
 
 ---
 
 **Note:**  
 - Ensure you have all dependencies installed from `requirements.txt` in each app's directory.
-- FastAPI is now used for the API server. Interactive docs are available at `/docs` when running locally or on Render.
+- FastAPI is used for the API server. Interactive docs are available at `/docs` when running locally.
+- The Simple Fresh App (port 5001) is recommended as it's standalone and doesn't require the API server.

@@ -1,8 +1,8 @@
 #!/bin/bash
-# Deployment script for fresh price data fix
+# Local deployment script for fresh price data
 
-echo "🚀 Deploying Fresh Price Data Fix to GitHub/Render"
-echo "=================================================="
+echo "🚀 Deploying Fresh Price Data Fix to GitHub"
+echo "==========================================="
 
 echo "📋 Files being deployed:"
 echo "✅ Modified: api_app/api_server.py (cache-busting, real-time data)"
