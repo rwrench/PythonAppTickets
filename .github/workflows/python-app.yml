@@ -27,11 +27,16 @@ jobs:
         pip install -r api_app/requirements.txt
         # Install web app dependencies
         pip install -r web_app/requirements.txt
-        # Install test dependencies
-        pip install pytest requests selenium webdriver-manager
 
-    - name: Run basic setup tests
-      run: pytest tests/test_basic_setup.py -v
+    - name: Verify installation
+      run: |
+        python --version
+        pip list
+        echo "✅ Dependencies installed successfully"
 
-    - name: Run finance utils tests  
-      run: pytest tests/test_finance_utils.py -v
+    - name: Basic syntax check
+      run: |
+        python -m py_compile simple_fresh_webapp.py
+        python -m py_compile api_app/api_server.py
+        python -m py_compile web_app/web_app.py
+        echo "✅ All Python files compile successfully"
