@@ -1,5 +1,9 @@
 first python project to read stock ticker information 
 
+## Requirements
+
+- **Python 3.11.1** or higher
+
 ## Testing Notes
 
 ### API (`api_app/api_server.py`)
@@ -55,6 +59,40 @@ first python project to read stock ticker information
   ```
   pytest tests/test_webapp_selenium.py
   ```
+
+---
+
+## macOS Deployment (Mac Mini)
+
+### Quick Setup
+1. **Clone/copy the project** to your Mac Mini
+2. **Make scripts executable:**
+   ```bash
+   chmod +x make_executable.sh && ./make_executable.sh
+   ```
+3. **Run setup:**
+   ```bash
+   ./setup_macos.sh
+   ```
+
+### Starting the Applications
+- **API Server (port 10000):**
+  ```bash
+  ./start_api_mac.sh
+  ```
+- **Web App (port 5000):**
+  ```bash
+  ./start_webapp_mac.sh
+  ```
+- **Simple Fresh App (port 5001):**
+  ```bash
+  ./start_simple_webapp_mac.sh
+  ```
+
+### Access URLs
+- API Documentation: `http://localhost:10000/docs`
+- Web App: `http://localhost:5000`
+- Simple Fresh App: `http://localhost:5001` (recommended - standalone)
 
 ---
 
