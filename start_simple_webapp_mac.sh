@@ -16,4 +16,13 @@ echo "⏹️  Press Ctrl+C to stop the server"
 echo ""
 
 # Start the simple fresh webapp
-python simple_fresh_webapp.py
+# Try different Python commands
+if command -v python3 &>/dev/null; then
+    python3 simple_fresh_webapp.py
+elif command -v python &>/dev/null; then
+    python simple_fresh_webapp.py
+else
+    echo "❌ Python not found! Please install Python 3.11+ first."
+    echo "Visit: https://www.python.org/downloads/"
+    exit 1
+fi
